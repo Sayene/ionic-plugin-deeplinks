@@ -58,7 +58,18 @@ public class IonicDeeplink extends CordovaPlugin {
 
   @Override
   public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    this.cordova.getActivity().setIntent(intent); // Ensure any new intent is set as the current one
     handleIntent(intent);
+  }
+  @Override
+  public void onResume(boolean multitasking) {
+    super.onResume(multitasking);
+  
+    Intent intent = this.cordova.getActivity().getIntent();
+    if (intent != null) {
+      handleIntent(intent);
+    }
   }
 
   public void handleIntent(Intent intent) {
@@ -205,13 +216,16 @@ public class IonicDeeplink extends CordovaPlugin {
     try {
       pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
       callbackContext.success();
-    } catch(PackageManager.NameNotFoundException e) {}
-
-    callbackContext.error("");
+      return; // We found the package, so return after calling success
+    } catch(PackageManager.NameNotFoundException e) {
+      // The package does not exist so we can't open the app
+    }
+    callbackContext.error("Could not find package"); // Provide an error message
   }
 
   private void getHardwareInfo(JSONArray args, final CallbackContext callbackContext) {
-    String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+    String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(),
+        android.provider.Settings.Secure.ANDROID_ID);
 
     JSONObject j = new JSONObject();
     try {

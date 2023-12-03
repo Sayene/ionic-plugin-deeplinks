@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="ionic-plugin-deeplinks" version="1.0.22">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="ionic-plugin-deeplinks" version="1.0.26">
 	<name>Ionic Deeplink Plugin</name>
 	<description>Ionic Deeplink Plugin</description>
 	<license>MIT</license>
@@ -54,10 +54,10 @@
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="http" />
 				<data android:scheme="$DEEPLINK_SCHEME" />
-        			<data android:host="$DEEPLINK_HOST" />
-        			<data android:pathPrefix="$ANDROID_PATH_PREFIX" />
+        <data android:host="$DEEPLINK_HOST" />
+        <data android:pathPrefix="$ANDROID_PATH_PREFIX" />
 			</intent-filter>
-				<intent-filter android:autoVerify="true">
+			<intent-filter android:autoVerify="true">
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
